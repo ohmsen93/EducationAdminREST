@@ -95,7 +95,9 @@ namespace EducationAdminREST.Controllers
                 return NotFound();
             }
 
+            user user = db.users.Find(student.email_address);
 
+            db.users.Remove(user);
             db.students.Remove(student);
             db.SaveChanges();
 

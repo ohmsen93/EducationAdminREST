@@ -110,6 +110,8 @@ namespace EducationAdminREST.Controllers
                 return NotFound();
             }
 
+
+
             db.users.Remove(user);
             db.SaveChanges();
 
