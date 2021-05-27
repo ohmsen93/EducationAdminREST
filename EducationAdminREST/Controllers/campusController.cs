@@ -12,44 +12,44 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
-    public class studentsController : ApiController
+    public class campusController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
-        // GET: api/students
-        public List<student> Getstudents()
+        // GET: api/campus
+        public IQueryable<campu> Getcampus()
         {
-            return db.students.ToList();
+            return db.campus;
         }
 
-        // GET: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Getstudent(int id)
+        // GET: api/campus/5
+        [ResponseType(typeof(campu))]
+        public IHttpActionResult Getcampu(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            campu campu = db.campus.Find(id);
+            if (campu == null)
             {
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok(campu);
         }
 
-        // PUT: api/students/5
+        // PUT: api/campus/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putstudent(int id, student student)
+        public IHttpActionResult Putcampu(int id, campu campu)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != student.id)
+            if (id != campu.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            db.Entry(campu).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace EducationAdminREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!studentExists(id))
+                if (!campuExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,35 @@ namespace EducationAdminREST.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/students
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Poststudent(student student)
+        // POST: api/campus
+        [ResponseType(typeof(campu))]
+        public IHttpActionResult Postcampu(campu campu)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.students.Add(student);
+            db.campus.Add(campu);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+            return CreatedAtRoute("DefaultApi", new { id = campu.id }, campu);
         }
 
-        // DELETE: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Deletestudent(int id)
+        // DELETE: api/campus/5
+        [ResponseType(typeof(campu))]
+        public IHttpActionResult Deletecampu(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            campu campu = db.campus.Find(id);
+            if (campu == null)
             {
                 return NotFound();
             }
 
-
-            db.students.Remove(student);
+            db.campus.Remove(campu);
             db.SaveChanges();
 
-            return Ok(student);
+            return Ok(campu);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +110,9 @@ namespace EducationAdminREST.Controllers
             base.Dispose(disposing);
         }
 
-        private bool studentExists(int id)
+        private bool campuExists(int id)
         {
-            return db.students.Count(e => e.id == id) > 0;
+            return db.campus.Count(e => e.id == id) > 0;
         }
     }
 }

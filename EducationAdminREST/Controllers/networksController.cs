@@ -12,44 +12,44 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
-    public class studentsController : ApiController
+    public class networksController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
-        // GET: api/students
-        public List<student> Getstudents()
+        // GET: api/networks
+        public List<network> Getnetworks()
         {
-            return db.students.ToList();
+            return db.networks.ToList();
         }
 
-        // GET: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Getstudent(int id)
+        // GET: api/networks/5
+        [ResponseType(typeof(network))]
+        public IHttpActionResult Getnetwork(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            network network = db.networks.Find(id);
+            if (network == null)
             {
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok(network);
         }
 
-        // PUT: api/students/5
+        // PUT: api/networks/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putstudent(int id, student student)
+        public IHttpActionResult Putnetwork(int id, network network)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != student.id)
+            if (id != network.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            db.Entry(network).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace EducationAdminREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!studentExists(id))
+                if (!networkExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,35 @@ namespace EducationAdminREST.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/students
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Poststudent(student student)
+        // POST: api/networks
+        [ResponseType(typeof(network))]
+        public IHttpActionResult Postnetwork(network network)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.students.Add(student);
+            db.networks.Add(network);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+            return CreatedAtRoute("DefaultApi", new { id = network.id }, network);
         }
 
-        // DELETE: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Deletestudent(int id)
+        // DELETE: api/networks/5
+        [ResponseType(typeof(network))]
+        public IHttpActionResult Deletenetwork(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            network network = db.networks.Find(id);
+            if (network == null)
             {
                 return NotFound();
             }
 
-
-            db.students.Remove(student);
+            db.networks.Remove(network);
             db.SaveChanges();
 
-            return Ok(student);
+            return Ok(network);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +110,9 @@ namespace EducationAdminREST.Controllers
             base.Dispose(disposing);
         }
 
-        private bool studentExists(int id)
+        private bool networkExists(int id)
         {
-            return db.students.Count(e => e.id == id) > 0;
+            return db.networks.Count(e => e.id == id) > 0;
         }
     }
 }

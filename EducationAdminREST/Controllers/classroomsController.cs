@@ -12,44 +12,44 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
-    public class studentsController : ApiController
+    public class classroomsController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
-        // GET: api/students
-        public List<student> Getstudents()
+        // GET: api/classrooms
+        public IQueryable<classroom> Getclassrooms()
         {
-            return db.students.ToList();
+            return db.classrooms;
         }
 
-        // GET: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Getstudent(int id)
+        // GET: api/classrooms/5
+        [ResponseType(typeof(classroom))]
+        public IHttpActionResult Getclassroom(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            classroom classroom = db.classrooms.Find(id);
+            if (classroom == null)
             {
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok(classroom);
         }
 
-        // PUT: api/students/5
+        // PUT: api/classrooms/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putstudent(int id, student student)
+        public IHttpActionResult Putclassroom(int id, classroom classroom)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != student.id)
+            if (id != classroom.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            db.Entry(classroom).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace EducationAdminREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!studentExists(id))
+                if (!classroomExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,35 @@ namespace EducationAdminREST.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/students
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Poststudent(student student)
+        // POST: api/classrooms
+        [ResponseType(typeof(classroom))]
+        public IHttpActionResult Postclassroom(classroom classroom)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.students.Add(student);
+            db.classrooms.Add(classroom);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+            return CreatedAtRoute("DefaultApi", new { id = classroom.id }, classroom);
         }
 
-        // DELETE: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Deletestudent(int id)
+        // DELETE: api/classrooms/5
+        [ResponseType(typeof(classroom))]
+        public IHttpActionResult Deleteclassroom(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            classroom classroom = db.classrooms.Find(id);
+            if (classroom == null)
             {
                 return NotFound();
             }
 
-
-            db.students.Remove(student);
+            db.classrooms.Remove(classroom);
             db.SaveChanges();
 
-            return Ok(student);
+            return Ok(classroom);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +110,9 @@ namespace EducationAdminREST.Controllers
             base.Dispose(disposing);
         }
 
-        private bool studentExists(int id)
+        private bool classroomExists(int id)
         {
-            return db.students.Count(e => e.id == id) > 0;
+            return db.classrooms.Count(e => e.id == id) > 0;
         }
     }
 }

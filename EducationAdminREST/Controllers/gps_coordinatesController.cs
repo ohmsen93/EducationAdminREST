@@ -12,44 +12,44 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
-    public class studentsController : ApiController
+    public class gps_coordinatesController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
-        // GET: api/students
-        public List<student> Getstudents()
+        // GET: api/gps_coordinates
+        public IQueryable<gps_coordinates> Getgps_coordinates()
         {
-            return db.students.ToList();
+            return db.gps_coordinates;
         }
 
-        // GET: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Getstudent(int id)
+        // GET: api/gps_coordinates/5
+        [ResponseType(typeof(gps_coordinates))]
+        public IHttpActionResult Getgps_coordinates(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            gps_coordinates gps_coordinates = db.gps_coordinates.Find(id);
+            if (gps_coordinates == null)
             {
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok(gps_coordinates);
         }
 
-        // PUT: api/students/5
+        // PUT: api/gps_coordinates/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putstudent(int id, student student)
+        public IHttpActionResult Putgps_coordinates(int id, gps_coordinates gps_coordinates)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != student.id)
+            if (id != gps_coordinates.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            db.Entry(gps_coordinates).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace EducationAdminREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!studentExists(id))
+                if (!gps_coordinatesExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,35 @@ namespace EducationAdminREST.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/students
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Poststudent(student student)
+        // POST: api/gps_coordinates
+        [ResponseType(typeof(gps_coordinates))]
+        public IHttpActionResult Postgps_coordinates(gps_coordinates gps_coordinates)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.students.Add(student);
+            db.gps_coordinates.Add(gps_coordinates);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+            return CreatedAtRoute("DefaultApi", new { id = gps_coordinates.id }, gps_coordinates);
         }
 
-        // DELETE: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Deletestudent(int id)
+        // DELETE: api/gps_coordinates/5
+        [ResponseType(typeof(gps_coordinates))]
+        public IHttpActionResult Deletegps_coordinates(int id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            gps_coordinates gps_coordinates = db.gps_coordinates.Find(id);
+            if (gps_coordinates == null)
             {
                 return NotFound();
             }
 
-
-            db.students.Remove(student);
+            db.gps_coordinates.Remove(gps_coordinates);
             db.SaveChanges();
 
-            return Ok(student);
+            return Ok(gps_coordinates);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +110,9 @@ namespace EducationAdminREST.Controllers
             base.Dispose(disposing);
         }
 
-        private bool studentExists(int id)
+        private bool gps_coordinatesExists(int id)
         {
-            return db.students.Count(e => e.id == id) > 0;
+            return db.gps_coordinates.Count(e => e.id == id) > 0;
         }
     }
 }

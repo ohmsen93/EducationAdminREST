@@ -12,44 +12,44 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
-    public class studentsController : ApiController
+    public class usersController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
-        // GET: api/students
-        public List<student> Getstudents()
+        // GET: api/users
+        public List<user> Getusers()
         {
-            return db.students.ToList();
+            return db.users.ToList();
         }
 
-        // GET: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Getstudent(int id)
+        // GET: api/users/5
+        [ResponseType(typeof(user))]
+        public IHttpActionResult Getuser(string id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            user user = db.users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok(user);
         }
 
-        // PUT: api/students/5
+        // PUT: api/users/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putstudent(int id, student student)
+        public IHttpActionResult Putuser(string id, user user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != student.id)
+            if (id != user.username)
             {
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            db.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace EducationAdminREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!studentExists(id))
+                if (!userExists(id))
                 {
                     return NotFound();
                 }
@@ -70,36 +70,50 @@ namespace EducationAdminREST.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/students
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Poststudent(student student)
+        // POST: api/users
+        [ResponseType(typeof(user))]
+        public IHttpActionResult Postuser(user user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.students.Add(student);
-            db.SaveChanges();
+            db.users.Add(user);
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (userExists(user.username))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = user.username }, user);
         }
 
-        // DELETE: api/students/5
-        [ResponseType(typeof(student))]
-        public IHttpActionResult Deletestudent(int id)
+        // DELETE: api/users/5
+        [ResponseType(typeof(user))]
+        public IHttpActionResult Deleteuser(string id)
         {
-            student student = db.students.Find(id);
-            if (student == null)
+            user user = db.users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-
-            db.students.Remove(student);
+            db.users.Remove(user);
             db.SaveChanges();
 
-            return Ok(student);
+            return Ok(user);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +125,9 @@ namespace EducationAdminREST.Controllers
             base.Dispose(disposing);
         }
 
-        private bool studentExists(int id)
+        private bool userExists(string id)
         {
-            return db.students.Count(e => e.id == id) > 0;
+            return db.users.Count(e => e.username == id) > 0;
         }
     }
 }
