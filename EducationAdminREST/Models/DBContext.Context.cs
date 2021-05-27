@@ -29,7 +29,6 @@ namespace EducationAdminREST.Models
         public virtual DbSet<attendance_record> attendance_record { get; set; }
         public virtual DbSet<campu> campus { get; set; }
         public virtual DbSet<city> cities { get; set; }
-        public virtual DbSet<@class> classes { get; set; }
         public virtual DbSet<classroom> classrooms { get; set; }
         public virtual DbSet<course> courses { get; set; }
         public virtual DbSet<faculty> faculties { get; set; }
@@ -40,5 +39,6 @@ namespace EducationAdminREST.Models
         public virtual DbSet<teacher> teachers { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<authority> authorities { get; set; }
+        public virtual DbSet<iclass> iclasses { get; set; }
     }
 }

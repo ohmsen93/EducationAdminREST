@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace EducationAdminREST.Models
 {
     using System;
@@ -23,7 +25,9 @@ namespace EducationAdminREST.Models
         public int id { get; set; }
         public string name { get; set; }
         public short ects { get; set; }
-    
+
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<lecture> lectures { get; set; }
     }

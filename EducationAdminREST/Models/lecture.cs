@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace EducationAdminREST.Models
 {
     using System;
@@ -18,8 +20,8 @@ namespace EducationAdminREST.Models
         public lecture()
         {
             this.attendance_record = new HashSet<attendance_record>();
-            this.classes = new HashSet<@class>();
             this.teachers = new HashSet<teacher>();
+            this.iclasses = new HashSet<iclass>();
         }
     
         public int id { get; set; }
@@ -33,14 +35,20 @@ namespace EducationAdminREST.Models
         public int length { get; set; }
         public string code { get; set; }
         public Nullable<System.DateTime> registration_deadline { get; set; }
-    
+
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<attendance_record> attendance_record { get; set; }
         public virtual classroom classroom { get; set; }
         public virtual course course { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<@class> classes { get; set; }
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<teacher> teachers { get; set; }
+
+        [JsonIgnore]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<iclass> iclasses { get; set; }
     }
 }

@@ -7,15 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace EducationAdminREST.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class @class
+    public partial class iclass
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public @class()
+        public iclass()
         {
             this.students = new HashSet<student>();
             this.lectures = new HashSet<lecture>();
@@ -26,8 +28,12 @@ namespace EducationAdminREST.Models
         public int faculty_id { get; set; }
     
         public virtual faculty faculty { get; set; }
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student> students { get; set; }
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<lecture> lectures { get; set; }
     }
