@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="54f2a60186b74cf2ba4e71c0b4c80fd5" Name="Diagram1">
+        <EntityTypeShape EntityType="roll_call_dbModel.address" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.attendance_record" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.campu" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.city" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.class" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.classroom" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.course" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.faculty" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.gps_coordinates" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.lecture" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.network" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.student" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.teacher" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.user" Width="1.5" PointX="12" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="roll_call_dbModel.authority" Width="1.5" PointX="14.25" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="roll_call_dbModel.fk_address_city" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_campus_address" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_ar_lecture" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_ar_student" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_campus_faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_classroom_campus" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_class_faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_student_class1" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_lecture_classroom" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_lecture_course" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_network_faculty1" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_student_gps_coordinates" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_teacher_gps_coordinates" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_student_network" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_individual_student" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_individual_teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.fk_authorities_users" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.class_lectures" ManuallyRouted="false" />
+        <AssociationConnector Association="roll_call_dbModel.teacher_lectures" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

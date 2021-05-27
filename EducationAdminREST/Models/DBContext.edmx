@@ -1,0 +1,1234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="roll_call_dbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="city_id" Type="int" Nullable="false" />
+          <Property Name="street_name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="street_number" Type="int" Nullable="false" />
+          <Property Name="registered_on" Type="datetime" Precision="3" Nullable="false" />
+          <Property Name="additional_details" Type="mediumtext" />
+        </EntityType>
+        <EntityType Name="attendance_record">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="lecture_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="lecture_id" Type="int" Nullable="false" />
+          <Property Name="is_attending" Type="tinyint" Nullable="false" />
+          <Property Name="registred_at" Type="datetime" Precision="3" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.roll_call_db.authorities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="authorities">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="authority" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="authority" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="campus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address_id" Type="int" Nullable="false" />
+          <Property Name="faculty_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="zip_code" Type="smallint" Nullable="false" />
+          <Property Name="city_name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="faculty_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="class_lectures">
+          <Key>
+            <PropertyRef Name="class_id" />
+            <PropertyRef Name="lecture_id" />
+          </Key>
+          <Property Name="class_id" Type="int" Nullable="false" />
+          <Property Name="lecture_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="classroom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campus_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="is_available" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ects" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="faculty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="gps_coordinates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="latitude" Type="decimal" Precision="10" Scale="8" Nullable="false" />
+          <Property Name="longitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+          <Property Name="range" Type="decimal" Precision="6" Scale="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lecture">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="course_id" Type="int" Nullable="false" />
+          <Property Name="classroom_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="date" Type="datetime" Precision="3" Nullable="false" />
+          <Property Name="time_start" Type="time" Precision="0" Nullable="false" />
+          <Property Name="time_end" Type="time" Precision="0" Nullable="false" />
+          <Property Name="time_zone" Type="int" Nullable="false" />
+          <Property Name="length" Type="int" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="45" />
+          <Property Name="registration_deadline" Type="datetime" Precision="3" />
+        </EntityType>
+        <EntityType Name="network">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ssid" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="faculty_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="class_id" Type="int" Nullable="false" />
+          <Property Name="network_id" Type="int" />
+          <Property Name="gps_coordinates_id" Type="int" />
+          <Property Name="forename" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email_address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gps_coordinates_id" Type="int" />
+          <Property Name="forename" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email_address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="teacher_lectures">
+          <Key>
+            <PropertyRef Name="teacher_id" />
+            <PropertyRef Name="lecture_id" />
+          </Key>
+          <Property Name="teacher_id" Type="int" Nullable="false" />
+          <Property Name="lecture_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="enabled" Type="bool" Nullable="false" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="teacher_id" Type="int" />
+        </EntityType>
+        <Association Name="fk_address_city">
+          <End Role="city" Type="Self.city" Multiplicity="1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ar_lecture">
+          <End Role="lecture" Type="Self.lecture" Multiplicity="1" />
+          <End Role="attendance_record" Type="Self.attendance_record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attendance_record">
+              <PropertyRef Name="lecture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ar_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="attendance_record" Type="Self.attendance_record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attendance_record">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_authorities_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="authorities" Type="Self.authorities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="authorities">
+              <PropertyRef Name="username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_campus_address">
+          <End Role="address" Type="Self.address" Multiplicity="1" />
+          <End Role="campus" Type="Self.campus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campus">
+              <PropertyRef Name="address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_campus_faculty">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="campus" Type="Self.campus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campus">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_class_faculty">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="class" Type="Self.class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_class_has_lecture_class1">
+          <End Role="class" Type="Self.class" Multiplicity="1" />
+          <End Role="class_lectures" Type="Self.class_lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class_lectures">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_class_has_lecture_lecture1">
+          <End Role="lecture" Type="Self.lecture" Multiplicity="1" />
+          <End Role="class_lectures" Type="Self.class_lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class_lectures">
+              <PropertyRef Name="lecture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_classroom_campus">
+          <End Role="campus" Type="Self.campus" Multiplicity="0..1" />
+          <End Role="classroom" Type="Self.classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="classroom">
+              <PropertyRef Name="campus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_individual_student">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_individual_teacher">
+          <End Role="teacher" Type="Self.teacher" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lecture_classroom">
+          <End Role="classroom" Type="Self.classroom" Multiplicity="1" />
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lecture">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lecture_course">
+          <End Role="course" Type="Self.course" Multiplicity="1" />
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lecture">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_network_faculty1">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="network" Type="Self.network" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="network">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_class1">
+          <End Role="class" Type="Self.class" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_gps_coordinates">
+          <End Role="gps_coordinates" Type="Self.gps_coordinates" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gps_coordinates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="gps_coordinates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_network">
+          <End Role="network" Type="Self.network" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="network">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="network_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_gps_coordinates">
+          <End Role="gps_coordinates" Type="Self.gps_coordinates" Multiplicity="0..1" />
+          <End Role="teacher" Type="Self.teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gps_coordinates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teacher">
+              <PropertyRef Name="gps_coordinates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_has_lecture_lecture1">
+          <End Role="lecture" Type="Self.lecture" Multiplicity="1" />
+          <End Role="teacher_lectures" Type="Self.teacher_lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teacher_lectures">
+              <PropertyRef Name="lecture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_has_lecture_teacher1">
+          <End Role="teacher" Type="Self.teacher" Multiplicity="1" />
+          <End Role="teacher_lectures" Type="Self.teacher_lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teacher_lectures">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="roll_call_dbModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="attendance_record" EntityType="Self.attendance_record" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="campus" EntityType="Self.campus" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="city" EntityType="Self.city" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="class" EntityType="Self.class" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="class_lectures" EntityType="Self.class_lectures" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="classroom" EntityType="Self.classroom" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="course" EntityType="Self.course" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="faculty" EntityType="Self.faculty" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="gps_coordinates" EntityType="Self.gps_coordinates" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="lecture" EntityType="Self.lecture" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="network" EntityType="Self.network" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="teacher" EntityType="Self.teacher" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="teacher_lectures" EntityType="Self.teacher_lectures" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="roll_call_db" store:Type="Tables" />
+          <EntitySet Name="authorities" EntityType="Self.authorities" store:Type="Tables" store:Schema="roll_call_db">
+            <DefiningQuery>SELECT
+`authorities`.`username`, 
+`authorities`.`authority`
+FROM `roll_call_db.authorities` AS `authorities`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_address_city" Association="Self.fk_address_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ar_lecture" Association="Self.fk_ar_lecture">
+            <End Role="lecture" EntitySet="lecture" />
+            <End Role="attendance_record" EntitySet="attendance_record" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ar_student" Association="Self.fk_ar_student">
+            <End Role="student" EntitySet="student" />
+            <End Role="attendance_record" EntitySet="attendance_record" />
+          </AssociationSet>
+          <AssociationSet Name="fk_authorities_users" Association="Self.fk_authorities_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="authorities" EntitySet="authorities" />
+          </AssociationSet>
+          <AssociationSet Name="fk_campus_address" Association="Self.fk_campus_address">
+            <End Role="address" EntitySet="address" />
+            <End Role="campus" EntitySet="campus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_campus_faculty" Association="Self.fk_campus_faculty">
+            <End Role="faculty" EntitySet="faculty" />
+            <End Role="campus" EntitySet="campus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_class_faculty" Association="Self.fk_class_faculty">
+            <End Role="faculty" EntitySet="faculty" />
+            <End Role="class" EntitySet="class" />
+          </AssociationSet>
+          <AssociationSet Name="fk_class_has_lecture_class1" Association="Self.fk_class_has_lecture_class1">
+            <End Role="class" EntitySet="class" />
+            <End Role="class_lectures" EntitySet="class_lectures" />
+          </AssociationSet>
+          <AssociationSet Name="fk_class_has_lecture_lecture1" Association="Self.fk_class_has_lecture_lecture1">
+            <End Role="lecture" EntitySet="lecture" />
+            <End Role="class_lectures" EntitySet="class_lectures" />
+          </AssociationSet>
+          <AssociationSet Name="fk_classroom_campus" Association="Self.fk_classroom_campus">
+            <End Role="campus" EntitySet="campus" />
+            <End Role="classroom" EntitySet="classroom" />
+          </AssociationSet>
+          <AssociationSet Name="fk_individual_student" Association="Self.fk_individual_student">
+            <End Role="student" EntitySet="student" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_individual_teacher" Association="Self.fk_individual_teacher">
+            <End Role="teacher" EntitySet="teacher" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lecture_classroom" Association="Self.fk_lecture_classroom">
+            <End Role="classroom" EntitySet="classroom" />
+            <End Role="lecture" EntitySet="lecture" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lecture_course" Association="Self.fk_lecture_course">
+            <End Role="course" EntitySet="course" />
+            <End Role="lecture" EntitySet="lecture" />
+          </AssociationSet>
+          <AssociationSet Name="fk_network_faculty1" Association="Self.fk_network_faculty1">
+            <End Role="faculty" EntitySet="faculty" />
+            <End Role="network" EntitySet="network" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_class1" Association="Self.fk_student_class1">
+            <End Role="class" EntitySet="class" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_gps_coordinates" Association="Self.fk_student_gps_coordinates">
+            <End Role="gps_coordinates" EntitySet="gps_coordinates" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_network" Association="Self.fk_student_network">
+            <End Role="network" EntitySet="network" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_gps_coordinates" Association="Self.fk_teacher_gps_coordinates">
+            <End Role="gps_coordinates" EntitySet="gps_coordinates" />
+            <End Role="teacher" EntitySet="teacher" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_has_lecture_lecture1" Association="Self.fk_teacher_has_lecture_lecture1">
+            <End Role="lecture" EntitySet="lecture" />
+            <End Role="teacher_lectures" EntitySet="teacher_lectures" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_has_lecture_teacher1" Association="Self.fk_teacher_has_lecture_teacher1">
+            <End Role="teacher" EntitySet="teacher" />
+            <End Role="teacher_lectures" EntitySet="teacher_lectures" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="roll_call_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="city_id" Type="Int32" Nullable="false" />
+          <Property Name="street_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="street_number" Type="Int32" Nullable="false" />
+          <Property Name="registered_on" Type="DateTime" Nullable="false" />
+          <Property Name="additional_details" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="city" Relationship="Self.fk_address_city" FromRole="address" ToRole="city" />
+          <NavigationProperty Name="campus" Relationship="Self.fk_campus_address" FromRole="address" ToRole="campus" />
+        </EntityType>
+        <EntityType Name="attendance_record">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="lecture_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="lecture_id" Type="Int32" Nullable="false" />
+          <Property Name="is_attending" Type="SByte" Nullable="false" />
+          <Property Name="registred_at" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="lecture" Relationship="Self.fk_ar_lecture" FromRole="attendance_record" ToRole="lecture" />
+          <NavigationProperty Name="student" Relationship="Self.fk_ar_student" FromRole="attendance_record" ToRole="student" />
+        </EntityType>
+        <EntityType Name="campu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address_id" Type="Int32" Nullable="false" />
+          <Property Name="faculty_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="address" Relationship="Self.fk_campus_address" FromRole="campus" ToRole="address" />
+          <NavigationProperty Name="faculty" Relationship="Self.fk_campus_faculty" FromRole="campus" ToRole="faculty" />
+          <NavigationProperty Name="classrooms" Relationship="Self.fk_classroom_campus" FromRole="campus" ToRole="classroom" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="zip_code" Type="Int16" Nullable="false" />
+          <Property Name="city_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="addresses" Relationship="Self.fk_address_city" FromRole="city" ToRole="address" />
+        </EntityType>
+        <EntityType Name="class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="faculty_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="faculty" Relationship="Self.fk_class_faculty" FromRole="class" ToRole="faculty" />
+          <NavigationProperty Name="students" Relationship="Self.fk_student_class1" FromRole="class" ToRole="student" />
+          <NavigationProperty Name="lectures" Relationship="Self.class_lectures" FromRole="class" ToRole="lecture" />
+        </EntityType>
+        <EntityType Name="classroom">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campus_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="is_available" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="campu" Relationship="Self.fk_classroom_campus" FromRole="classroom" ToRole="campus" />
+          <NavigationProperty Name="lectures" Relationship="Self.fk_lecture_classroom" FromRole="classroom" ToRole="lecture" />
+        </EntityType>
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ects" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="lectures" Relationship="Self.fk_lecture_course" FromRole="course" ToRole="lecture" />
+        </EntityType>
+        <EntityType Name="faculty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="campus" Relationship="Self.fk_campus_faculty" FromRole="faculty" ToRole="campus" />
+          <NavigationProperty Name="classes" Relationship="Self.fk_class_faculty" FromRole="faculty" ToRole="class" />
+          <NavigationProperty Name="networks" Relationship="Self.fk_network_faculty1" FromRole="faculty" ToRole="network" />
+        </EntityType>
+        <EntityType Name="gps_coordinates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="latitude" Type="Decimal" Nullable="false" />
+          <Property Name="longitude" Type="Decimal" Nullable="false" />
+          <Property Name="range" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="students" Relationship="Self.fk_student_gps_coordinates" FromRole="gps_coordinates" ToRole="student" />
+          <NavigationProperty Name="teachers" Relationship="Self.fk_teacher_gps_coordinates" FromRole="gps_coordinates" ToRole="teacher" />
+        </EntityType>
+        <EntityType Name="lecture">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="course_id" Type="Int32" Nullable="false" />
+          <Property Name="classroom_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="time_start" Type="Time" Nullable="false" />
+          <Property Name="time_end" Type="Time" Nullable="false" />
+          <Property Name="time_zone" Type="Int32" Nullable="false" />
+          <Property Name="length" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="registration_deadline" Type="DateTime" />
+          <NavigationProperty Name="attendance_record" Relationship="Self.fk_ar_lecture" FromRole="lecture" ToRole="attendance_record" />
+          <NavigationProperty Name="classroom" Relationship="Self.fk_lecture_classroom" FromRole="lecture" ToRole="classroom" />
+          <NavigationProperty Name="course" Relationship="Self.fk_lecture_course" FromRole="lecture" ToRole="course" />
+          <NavigationProperty Name="classes" Relationship="Self.class_lectures" FromRole="lecture" ToRole="class" />
+          <NavigationProperty Name="teachers" Relationship="Self.teacher_lectures" FromRole="lecture" ToRole="teacher" />
+        </EntityType>
+        <EntityType Name="network">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ssid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="faculty_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="faculty" Relationship="Self.fk_network_faculty1" FromRole="network" ToRole="faculty" />
+          <NavigationProperty Name="students" Relationship="Self.fk_student_network" FromRole="network" ToRole="student" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="class_id" Type="Int32" Nullable="false" />
+          <Property Name="network_id" Type="Int32" />
+          <Property Name="gps_coordinates_id" Type="Int32" />
+          <Property Name="forename" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="attendance_record" Relationship="Self.fk_ar_student" FromRole="student" ToRole="attendance_record" />
+          <NavigationProperty Name="class" Relationship="Self.fk_student_class1" FromRole="student" ToRole="class" />
+          <NavigationProperty Name="gps_coordinates" Relationship="Self.fk_student_gps_coordinates" FromRole="student" ToRole="gps_coordinates" />
+          <NavigationProperty Name="network" Relationship="Self.fk_student_network" FromRole="student" ToRole="network" />
+          <NavigationProperty Name="users" Relationship="Self.fk_individual_student" FromRole="student" ToRole="users" />
+        </EntityType>
+        <EntityType Name="teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gps_coordinates_id" Type="Int32" />
+          <Property Name="forename" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="gps_coordinates" Relationship="Self.fk_teacher_gps_coordinates" FromRole="teacher" ToRole="gps_coordinates" />
+          <NavigationProperty Name="users" Relationship="Self.fk_individual_teacher" FromRole="teacher" ToRole="users" />
+          <NavigationProperty Name="lectures" Relationship="Self.teacher_lectures" FromRole="teacher" ToRole="lecture" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="teacher_id" Type="Int32" />
+          <NavigationProperty Name="student" Relationship="Self.fk_individual_student" FromRole="users" ToRole="student" />
+          <NavigationProperty Name="teacher" Relationship="Self.fk_individual_teacher" FromRole="users" ToRole="teacher" />
+          <NavigationProperty Name="authorities" Relationship="Self.fk_authorities_users" FromRole="users" ToRole="authorities" />
+        </EntityType>
+        <EntityType Name="authority">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="authority1" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="authority1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.fk_authorities_users" FromRole="authorities" ToRole="users" />
+        </EntityType>
+        <Association Name="fk_address_city">
+          <End Role="city" Type="Self.city" Multiplicity="1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_campus_address">
+          <End Role="address" Type="Self.address" Multiplicity="1" />
+          <End Role="campus" Type="Self.campu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campus">
+              <PropertyRef Name="address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ar_lecture">
+          <End Role="lecture" Type="Self.lecture" Multiplicity="1" />
+          <End Role="attendance_record" Type="Self.attendance_record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attendance_record">
+              <PropertyRef Name="lecture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ar_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="attendance_record" Type="Self.attendance_record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attendance_record">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_campus_faculty">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="campus" Type="Self.campu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campus">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_classroom_campus">
+          <End Role="campus" Type="Self.campu" Multiplicity="0..1" />
+          <End Role="classroom" Type="Self.classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="classroom">
+              <PropertyRef Name="campus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_class_faculty">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="class" Type="roll_call_dbModel.class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_class1">
+          <End Role="class" Type="roll_call_dbModel.class" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lecture_classroom">
+          <End Role="classroom" Type="Self.classroom" Multiplicity="1" />
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classroom">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lecture">
+              <PropertyRef Name="classroom_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lecture_course">
+          <End Role="course" Type="Self.course" Multiplicity="1" />
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lecture">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_network_faculty1">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="1" />
+          <End Role="network" Type="Self.network" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="network">
+              <PropertyRef Name="faculty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_gps_coordinates">
+          <End Role="gps_coordinates" Type="Self.gps_coordinates" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gps_coordinates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="gps_coordinates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_gps_coordinates">
+          <End Role="gps_coordinates" Type="Self.gps_coordinates" Multiplicity="0..1" />
+          <End Role="teacher" Type="Self.teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gps_coordinates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teacher">
+              <PropertyRef Name="gps_coordinates_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_student_network">
+          <End Role="network" Type="Self.network" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="network">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="network_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_individual_student">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_individual_teacher">
+          <End Role="teacher" Type="Self.teacher" Multiplicity="0..1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="teacher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_authorities_users">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="authorities" Type="Self.authority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="authorities">
+              <PropertyRef Name="username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="class_lectures">
+          <End Role="class" Type="roll_call_dbModel.class" Multiplicity="*" />
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+        </Association>
+        <Association Name="teacher_lectures">
+          <End Role="lecture" Type="Self.lecture" Multiplicity="*" />
+          <End Role="teacher" Type="Self.teacher" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="roll_call_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="Self.address" />
+          <EntitySet Name="attendance_record" EntityType="Self.attendance_record" />
+          <EntitySet Name="campus" EntityType="Self.campu" />
+          <EntitySet Name="cities" EntityType="Self.city" />
+          <EntitySet Name="classes" EntityType="roll_call_dbModel.class" />
+          <EntitySet Name="classrooms" EntityType="Self.classroom" />
+          <EntitySet Name="courses" EntityType="Self.course" />
+          <EntitySet Name="faculties" EntityType="Self.faculty" />
+          <EntitySet Name="gps_coordinates" EntityType="Self.gps_coordinates" />
+          <EntitySet Name="lectures" EntityType="Self.lecture" />
+          <EntitySet Name="networks" EntityType="Self.network" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="teachers" EntityType="Self.teacher" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="authorities" EntityType="Self.authority" />
+          <AssociationSet Name="fk_address_city" Association="Self.fk_address_city">
+            <End Role="city" EntitySet="cities" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_campus_address" Association="Self.fk_campus_address">
+            <End Role="address" EntitySet="addresses" />
+            <End Role="campus" EntitySet="campus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ar_lecture" Association="Self.fk_ar_lecture">
+            <End Role="lecture" EntitySet="lectures" />
+            <End Role="attendance_record" EntitySet="attendance_record" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ar_student" Association="Self.fk_ar_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="attendance_record" EntitySet="attendance_record" />
+          </AssociationSet>
+          <AssociationSet Name="fk_campus_faculty" Association="Self.fk_campus_faculty">
+            <End Role="faculty" EntitySet="faculties" />
+            <End Role="campus" EntitySet="campus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_classroom_campus" Association="Self.fk_classroom_campus">
+            <End Role="campus" EntitySet="campus" />
+            <End Role="classroom" EntitySet="classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="fk_class_faculty" Association="Self.fk_class_faculty">
+            <End Role="faculty" EntitySet="faculties" />
+            <End Role="class" EntitySet="classes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_class1" Association="Self.fk_student_class1">
+            <End Role="class" EntitySet="classes" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lecture_classroom" Association="Self.fk_lecture_classroom">
+            <End Role="classroom" EntitySet="classrooms" />
+            <End Role="lecture" EntitySet="lectures" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lecture_course" Association="Self.fk_lecture_course">
+            <End Role="course" EntitySet="courses" />
+            <End Role="lecture" EntitySet="lectures" />
+          </AssociationSet>
+          <AssociationSet Name="fk_network_faculty1" Association="Self.fk_network_faculty1">
+            <End Role="faculty" EntitySet="faculties" />
+            <End Role="network" EntitySet="networks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_gps_coordinates" Association="Self.fk_student_gps_coordinates">
+            <End Role="gps_coordinates" EntitySet="gps_coordinates" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_gps_coordinates" Association="Self.fk_teacher_gps_coordinates">
+            <End Role="gps_coordinates" EntitySet="gps_coordinates" />
+            <End Role="teacher" EntitySet="teachers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_student_network" Association="Self.fk_student_network">
+            <End Role="network" EntitySet="networks" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_individual_student" Association="Self.fk_individual_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_individual_teacher" Association="Self.fk_individual_teacher">
+            <End Role="teacher" EntitySet="teachers" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_authorities_users" Association="Self.fk_authorities_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="authorities" EntitySet="authorities" />
+          </AssociationSet>
+          <AssociationSet Name="class_lectures" Association="Self.class_lectures">
+            <End Role="class" EntitySet="classes" />
+            <End Role="lecture" EntitySet="lectures" />
+          </AssociationSet>
+          <AssociationSet Name="teacher_lectures" Association="Self.teacher_lectures">
+            <End Role="lecture" EntitySet="lectures" />
+            <End Role="teacher" EntitySet="teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="roll_call_dbModelStoreContainer" CdmEntityContainer="roll_call_dbEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="roll_call_dbModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="street_name" ColumnName="street_name" />
+                <ScalarProperty Name="street_number" ColumnName="street_number" />
+                <ScalarProperty Name="registered_on" ColumnName="registered_on" />
+                <ScalarProperty Name="additional_details" ColumnName="additional_details" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attendance_record">
+            <EntityTypeMapping TypeName="roll_call_dbModel.attendance_record">
+              <MappingFragment StoreEntitySet="attendance_record">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="lecture_id" ColumnName="lecture_id" />
+                <ScalarProperty Name="is_attending" ColumnName="is_attending" />
+                <ScalarProperty Name="registred_at" ColumnName="registred_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="campus">
+            <EntityTypeMapping TypeName="roll_call_dbModel.campu">
+              <MappingFragment StoreEntitySet="campus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address_id" ColumnName="address_id" />
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cities">
+            <EntityTypeMapping TypeName="roll_call_dbModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+                <ScalarProperty Name="city_name" ColumnName="city_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="classes">
+            <EntityTypeMapping TypeName="roll_call_dbModel.class">
+              <MappingFragment StoreEntitySet="class">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="classrooms">
+            <EntityTypeMapping TypeName="roll_call_dbModel.classroom">
+              <MappingFragment StoreEntitySet="classroom">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="campus_id" ColumnName="campus_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="is_available" ColumnName="is_available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="roll_call_dbModel.course">
+              <MappingFragment StoreEntitySet="course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ects" ColumnName="ects" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="faculties">
+            <EntityTypeMapping TypeName="roll_call_dbModel.faculty">
+              <MappingFragment StoreEntitySet="faculty">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gps_coordinates">
+            <EntityTypeMapping TypeName="roll_call_dbModel.gps_coordinates">
+              <MappingFragment StoreEntitySet="gps_coordinates">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="range" ColumnName="range" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lectures">
+            <EntityTypeMapping TypeName="roll_call_dbModel.lecture">
+              <MappingFragment StoreEntitySet="lecture">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="classroom_id" ColumnName="classroom_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="time_start" ColumnName="time_start" />
+                <ScalarProperty Name="time_end" ColumnName="time_end" />
+                <ScalarProperty Name="time_zone" ColumnName="time_zone" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="registration_deadline" ColumnName="registration_deadline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="networks">
+            <EntityTypeMapping TypeName="roll_call_dbModel.network">
+              <MappingFragment StoreEntitySet="network">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ssid" ColumnName="ssid" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="faculty_id" ColumnName="faculty_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="roll_call_dbModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+                <ScalarProperty Name="network_id" ColumnName="network_id" />
+                <ScalarProperty Name="gps_coordinates_id" ColumnName="gps_coordinates_id" />
+                <ScalarProperty Name="forename" ColumnName="forename" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teachers">
+            <EntityTypeMapping TypeName="roll_call_dbModel.teacher">
+              <MappingFragment StoreEntitySet="teacher">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="gps_coordinates_id" ColumnName="gps_coordinates_id" />
+                <ScalarProperty Name="forename" ColumnName="forename" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="roll_call_dbModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="authorities">
+            <EntityTypeMapping TypeName="roll_call_dbModel.authority">
+              <MappingFragment StoreEntitySet="authorities">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="authority1" ColumnName="authority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="class_lectures" TypeName="roll_call_dbModel.class_lectures" StoreEntitySet="class_lectures">
+            <EndProperty Name="class">
+              <ScalarProperty Name="id" ColumnName="class_id" />
+            </EndProperty>
+            <EndProperty Name="lecture">
+              <ScalarProperty Name="id" ColumnName="lecture_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="teacher_lectures" TypeName="roll_call_dbModel.teacher_lectures" StoreEntitySet="teacher_lectures">
+            <EndProperty Name="lecture">
+              <ScalarProperty Name="id" ColumnName="lecture_id" />
+            </EndProperty>
+            <EndProperty Name="teacher">
+              <ScalarProperty Name="id" ColumnName="teacher_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
