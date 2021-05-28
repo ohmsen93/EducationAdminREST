@@ -17,9 +17,9 @@ namespace EducationAdminREST.Controllers
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
         // GET: api/campus
-        public IQueryable<campu> Getcampus()
+        public List<campu> Getcampus()
         {
-            return db.campus;
+            return db.campus.ToList();
         }
 
         // GET: api/campus/5

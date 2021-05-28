@@ -17,9 +17,9 @@ namespace EducationAdminREST.Controllers
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
         // GET: api/teachers
-        public IQueryable<teacher> Getteachers()
+        public List<teacher> Getteachers()
         {
-            return db.teachers;
+            return db.teachers.ToList();
         }
 
         // GET: api/teachers/5
@@ -95,6 +95,10 @@ namespace EducationAdminREST.Controllers
                 return NotFound();
             }
 
+
+            user user = db.users.Find(teacher.email_address);
+
+            db.users.Remove(user);
             db.teachers.Remove(teacher);
             db.SaveChanges();
 
