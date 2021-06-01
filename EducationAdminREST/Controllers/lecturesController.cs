@@ -12,14 +12,15 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
+    [Authorize]
     public class lecturesController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
 
         // GET: api/lectures
-        public IQueryable<lecture> Getlectures()
+        public List<lecture> Getlectures()
         {
-            return db.lectures;
+            return db.lectures.ToList();
         }
 
         // GET: api/lectures/5

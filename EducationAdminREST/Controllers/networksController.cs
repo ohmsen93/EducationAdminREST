@@ -12,6 +12,7 @@ using EducationAdminREST.Models;
 
 namespace EducationAdminREST.Controllers
 {
+    [Authorize]
     public class networksController : ApiController
     {
         private roll_call_dbEntities db = new roll_call_dbEntities();
